@@ -1,0 +1,51 @@
+控制流程
+  1.if:
+    在Kotlin中有一种与C不相同的写法类似于三目运算
+      Kotlin:                            C++:
+        var a = 1                          int a = 1;
+        var b = if(a>0) 1 else 2           int b = a ? 1 : 2;
+    如果分支有且只有一条语句（而且不是块），取决于这条语句的类型：
+      如果是表达式求值，那么这个分支的值就是该表达式的值。
+      否则，这个分支的值是 Unit。
+          val x = 5
+          val result = if (x > 3) 42           // 单行语句是一个值，整个 `if` 返回 42
+                        else println("Hello")  // 单行语句返回 Unit
+          println(result)                      // 输出 Unit
+          
+    如果分支是一个块：
+      如果块内没有语句，则这个分支的值是 Unit。
+      否则，"这个分支的值是最后一条语句的值"。最后一条语句的值按照上面的方法求出。
+          val x = 5
+          val result = if (x > 3) 
+        {                               // 分支是个代码块
+            val y = x + 10
+                y * 2                   // 最后一行表达式的值是 30
+        } else { 
+            println("Hello")            // 最后一行调用 println，值是 Unit
+        }
+            println(result)             // 输出 30 或 Unit
+              
+    如果块内的语句是一条定义语句，则不能省略大括号 {}
+    if 必须和 else 搭配才能作为一个表达式使用。如果 else 中确实没什么要做的事，那么可以写一个空白的块。
+  2.for循环
+      遍历数组等数据结构时使用for in来遍历
+        val a = arrayOf(1, 2, 3)
+        for(i in a){
+          println(i)    //使用i来输出a的每一个元素
+        }
+      计数循环时使用repeat()
+        repeat(10){}    //重复执行{}内的语句10次
+  3.break和continue与C相同 
+面向过程    
+  1.命名空间(namespace)
+    var a = 1
+    {
+        a += 1
+    }
+    println(a) //与C不同这里控制台输出的值为1
+      
+    传递给编译器的每个编译单元是一个独立的命名空间。（通常，一个编译单元也就是一个 .kt 源文件）
+    在编译单元内部，每个块是一个独立的命名空间。
+  
+
+      
