@@ -1,0 +1,96 @@
+命名空间
+  1.重影
+    变量重影（Shadowing） 是指在嵌套作用域中，内部作用域中声明的变量与外部作用域中的变量同名，造成外部变量被覆盖或“遮蔽”的现象。
+      var a = 1
+      if (a == 1) {
+          a++
+      }
+      val b = a           /*b的值为2、在if中没有重新定义a、而是进行了自增、
+                            此时编译器会向上查找对象(无论如何只会向上查找、不会向下)所以将外部变量的a的值自增1*/
+函数
+  1.fun
+    在Kotlin中函数以fun为关键字定义
+        
+    与C相同、Kotlin中也是以main函数为入口开始执行
+        
+    除定义外、语句都要写在函数中
+
+    与 C 不同，Kotlin 没有函数原型，也不要求『先定义再使用』—— Kotlin 编译器会找到它们的。
+  2.库函数
+    Kotlin 标准库提供了大量可重用的函数，此外你还可以从 Kotlin 直接调用 Java 标准库中的函数
+  3.参数列表
+    与C相同、函数在接受传递参数时、必须指定参数的数据类型、使用":"显式的指定参数的类型
+        fun greet(name: String, age: Int) {            //指定的参数类型首字母需要大写
+        println("Hello, $name! Your age is $age.")     // $的作用为取地址
+        }
+    在调用函数时、传递的参数必须按照指定的参数类型传递、否则会拒绝编译
+    与C不同的是、在函数内、传递的参数是val、不可变的、相当于每个传递的参数都被const修饰了
+    如需修改传递的参数、则需要在函数内部重新定义一个var变量、赋值为传递的参数进行操作后返回(return)
+  4.返回值
+      如果函数需要返回某个值，你需要明确指定返回类型，并且在函数体内使用 return 来返回该值。
+          fun a(b:Int):Int{
+            return b++;
+          }
+      对于只有一行代码的简单函数，可以省略大括号和 return 关键字，直接使用单表达式体，类型由 Kotlin 自动推断或显式指定。
+          fun add(a: Int, b: Int): Int = a + b
+      对于匿名函数和 lambda 表达式，返回值是 return 的值，也可以根据最后一行代码自动推断其类型。
+          val multiply = { x: Int, y: Int -> x * y } // 推断值类型为 (Int, Int) -> Int
+          val message = { name: String ->
+            "Hello, $name!"                          // 最后一行是返回值
+          }
+      在某些情况下，函数永远不会返回结果，此时可以使用 Nothing 作为返回类型。
+          fun infiniteLoop(): Nothing {
+              while (true) {
+              println("This loop runs forever")             // 不会有正常返回
+              }
+          }
+
+          fun throwException(message: String): Nothing {
+              throw IllegalArgumentException(message)       // 抛异常的函数永远不返回
+              }
+      Kotlin 对返回值有很多辅助功能，比如可以通过 null 或默认值简化逻辑。结合 ? 操作符或 elvis 操作符，有助于处理可空数据：
+          fun greet(name: String?): String {
+              return name ?: "Guest"                        // 如果 name 为 null 就返回 "Guest"
+          }
+    如果一个函数不返回任何值（类似于 Java 的 void），它的返回类型是 Unit,不过，Unit 通常可以省略。
+          fun printMessage(message: String): Unit {
+              println(message)                             // 无需显式返回任何内容
+          }
+  5.函数的嵌套定义
+    Kotlin 可以在函数中嵌套定义函数，内部定义的函数无需参数即可访问其所在命名空间的变量：
+          fun foo() {
+            val unicorn = 1
+            fun addUnicorn(a: Int): Int {
+              return unicorn + a
+            }
+            addUnicorn(2)                                  //这行语句的结果为 3
+          }
+
+  fun print(message: Any?)
+    这是函数的参数列表，说明调用该函数时需要传递的参数。
+    参数详解：
+    message 是参数的名字，供函数内部调用使用。
+    : Any? 是参数 message 的类型，表示它可以接受 任何数据类型，包括可以为 null。
+    为什么能为 null？
+    问号 ? 表示这是一个可空类型。没有 ? 的类型（如 Any）强制不能接受 null 作为值。
+
+
+      fun main() {
+          var i = 1
+          repeat(5) {
+          outputLine(i)
+          i++
+          }
+      }
+
+      fun outputLine(start: Int) {
+            var i = start
+            repeat(5) {
+                print(i)
+                i = if (i == 5) 1 else i + 1
+            }
+            println()
+      }
+
+
+    
